@@ -10,43 +10,57 @@ eleventyComputed:
   layout: "{{ page.Layout }}"
 ---
 
-<img src="/agencykit_11ty_starter.png" alt="">
-<h1>{{page.name}}</h1>
-<hr>
-{% if page.content.html %}
-  {{ page.content.html | safe }}
-{% endif %}
-
-<small><u>Child pages</u></small>
-<ul>
-  {% for item in collections[page.collectionName] | reverse %}
+<menu>
+  <ul>
+    {% for item in collections.nav %}
     <li>
-      <a href="{{ item.path }}">{{ item.name }}</a>
+      🌱 <a href="{{ item.path }}">{{ item.name }}</a>
     </li>
   {% endfor %}
-</ul>
+  </ul>
+  <div class="contact">
+    <small>email:</small><a href="mailto:scout.tosi@gmail.com">scout.tosi@gmail.com</a>
+    <small>phone:</small><a href="tel:7406417921">(740) 641-7921</a>
+  </div>
+</menu>
 
-<small><u>Menu</u></small>
-<ul>
-  {% for item in collections.nav %}
-  <li>
-    <a href="{{ item.path }}">{{ item.name }}</a>
-  </li>
-{% endfor %}
-</ul>
+<main>
+  <h1>{{page.name}}</h1>
+  <hr>
+  {% if page.content.html %}
+    {{ page.content.html | safe }}
+  {% endif %}
+</main>
+
+{% if page.path.includes('portfolio') %}
+  <small><u>My Portfolio</u></small>
+  <ul>
+    {% for item in collections.portfolio | reverse %}
+      <li>
+        <a href="{{ item.path }}">{{ item.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% elif page.path.includes('posts') %}
+  <small><u>My Posts</u></small>
+  <ul>
+    {% for item in collections.posts | reverse %}
+      <li>
+        <a href="{{ item.path }}">{{ item.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
 <hr>
-<pre><code>{{layout}}</code></pre>
 
-<span>NotionCMS Page Object:</span>
-<json-viewer data="{{page | removeEleventyProps | dump }}" style="padding: 1.5rem; border-radius: 1rem;"></json-viewer>
+{% if not PROD %}
+  <span>NotionCMS Page Object:</span>
+  <json-viewer data="{{page | removeEleventyProps | dump }}" style="padding: 1.5rem; border-radius: 1rem;"></json-viewer>
 
-<footer style="text-align: center">
-  <a href="https://www.agencykit.so/notion-cms/guide/">
-    <img src="/built_with.png" alt="">
-  </a>
-</footer>
+  <script>
+    const notionPage = {{page | dump | safe}};
+    console.log('[notionCMS page]:', notionPage);
+  </script>
+{% endif %}
 
-<script>
-  const notionPage = {{page | dump | safe}};
-  console.log('[notionCMS page]:', notionPage);
-</script>
