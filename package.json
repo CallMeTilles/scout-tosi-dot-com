@@ -16,7 +16,7 @@
   "scripts": {
     "serve": "rimraf _site && npx @11ty/eleventy --serve",
     "watch": "rimraf _site && npx @11ty/eleventy --watch",
-    "build": "rimraf _site && npx @11ty/eleventy",
+    "build": "rimraf _site && PROD=true npx @11ty/eleventy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "version": "changeset version"
   },

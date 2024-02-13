@@ -7,8 +7,8 @@ const notion = new NotionCMS({
   databaseId: process.env.NOTION_DB_ID,
   notionAPIKey: process.env.NOTION_API_KEY,
   localCacheDirectory: `${process.cwd()}/lc/`,
-  draftMode: true, // turn off for PROD
-  rootAlias: '/home', // -> /about DONT FORGET
+  draftMode: false, // turn off for PROD
+  rootAlias: '/about',
   plugins: [
     Head(),
     Linker(),
@@ -30,6 +30,7 @@ const notion = new NotionCMS({
 export default async function (config) {
   try {
     await notion.pull();
+    notion.export({ pretty: true, path: `${process.cwd()}/lc/debug.json` })
   } catch (e) {
     console.error(e)
   }

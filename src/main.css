@@ -67,3 +67,17 @@ figure object {
 details[open] > *:not(summary) {
   animation: details-show 150ms ease-in-out;
 }
+
+#about figure {
+  margin-inline: auto;
+}
+
+#about figure img {
+  height: 225px;
+  float: left;
+  padding-right: 20px;
+  max-width: 100%;
+  display: block;
+  margin-inline: auto;
+  margin-block: 0;
+}
